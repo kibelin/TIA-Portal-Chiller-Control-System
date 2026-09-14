@@ -1,7 +1,6 @@
 # Chiller PLC Control System — Siemens TIA Portal V19
 
-A  chiller control example developed in **Siemens TIA Portal V19** for learning. It is not intended to be used directly on a real chiller without a complete engineering review, machine-specific safety logic, refrigeration design checks, electrical protection, commissioning, and validation.
-
+A  chiller control example developed in **Siemens TIA Portal V19** for learning. 
 
 ---
 
