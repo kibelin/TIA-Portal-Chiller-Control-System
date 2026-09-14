@@ -1,10 +1,7 @@
 # Chiller PLC Control System — Siemens TIA Portal V19
 
-A modular chiller control example developed in **Siemens TIA Portal V19** for learning and demonstration purposes.
+A  chiller control example developed in **Siemens TIA Portal V19** for learning. It is not intended to be used directly on a real chiller without a complete engineering review, machine-specific safety logic, refrigeration design checks, electrical protection, commissioning, and validation.
 
-The project demonstrates how a chiller application can be structured using reusable Function Blocks, global data structures, multi-instance calls, PID control, runtime-based compressor sequencing, HMI monitoring, alarm handling, historical alarm logging, trend logging, and PLCSIM-based simulation.
-
-> **Important:** This repository is an educational example. It is not intended to be used directly on a real chiller without a complete engineering review, machine-specific safety logic, refrigeration design checks, electrical protection, commissioning, and validation.
 
 ---
 
@@ -15,23 +12,6 @@ The project demonstrates how a chiller application can be structured using reusa
 ![Main Page](docs/images/main-page.png)
 
 The main page provides a quick overview of the complete chiller:
-
-- 8 compressor status indicators
-- 12 fan status indicators
-- Water outlet temperature
-- Water outlet temperature setpoint
-- Compressor capacity %
-- Fan capacity %
-- Pressure value and pressure setpoint
-- Machine Start
-- Machine Stop
-- Alarm Reset
-
-Equipment status colors:
-
-- **Gray** = OFF
-- **Green** = ON
-- **Red** = FAULT
 
 ---
 
@@ -90,16 +70,6 @@ When the fault condition disappears and the fault is reset, the alarm is removed
 ![Alarm History](docs/images/alarm-history.png)
 
 Alarm events are also written to an HMI alarm log.
-
-The alarm history can therefore retain events even after the active alarm has disappeared.
-
-Typical logged events include:
-
-- Alarm incoming
-- Alarm outgoing
-- Alarm acknowledgement
-
-This makes it possible to review when a fault occurred and when it was cleared.
 
 ---
 
@@ -406,69 +376,6 @@ This keeps the PLC alarm logic and the WinCC discrete alarm configuration organi
 ![TIA Portal Program Structure](docs/images/tia-project-structure.png)
 
 The PLC program is divided into logical sections instead of placing all logic directly in `OB1`.
-
-```text
-Program blocks
-|
-+-- 00_main
-|   +-- OB1_Main
-|   +-- OB30_PID
-|   +-- FB_EquipmentMain
-|   +-- FB_MachineMain
-|   +-- FB_SimulationMain
-|   +-- DB_EquipmentMain
-|   +-- DB_MachineMain
-|   +-- DB_SimulationMain
-|
-+-- 01_equipment
-|   +-- FB_Compressor
-|   +-- FB_CompressorManager
-|   +-- FB_Fan
-|   +-- FB_FanManager
-|
-+-- 02_utilities
-|   +-- FC_AlarmMapping
-|   +-- FC_CalcPercent
-|   +-- FC_DemandToCount
-|   +-- FC_ReadInputs
-|   +-- FC_WriteOutputs
-|
-+-- 03_globalData
-|   +-- DB_Alarm
-|   +-- DB_Equipment
-|   +-- DB_Machine
-|   +-- DB_Simulation
-|
-+-- 04_simulation
-    +-- FB_CompressorSim
-    +-- FB_FanSim
-```
-
-Technology objects:
-
-```text
-PID_WaterTemp
-PID_GasPressure
-```
-
-The execution concept is intentionally layered:
-
-```text
-OB1
- |
- +--> Machine-level logic
- |
- +--> Equipment-level logic
- |      |
- |      +--> Managers
- |      +--> Compressor instances
- |      +--> Fan instances
- |
- +--> Simulation
- |
- +--> I/O and utility functions
-```
-
 This keeps device logic reusable and prevents the main cycle from becoming a large collection of unrelated networks.
 
 ---
@@ -663,8 +570,6 @@ Useful values:
 
 Enter a process pressure above the setpoint and verify that fan demand increases.
 
-> The demo HMI labels the pressure value as **Suction Line Pressure**. In a real chiller, the exact pressure measurement used for condenser fan control must be selected according to the refrigeration design and control philosophy.
-
 ---
 
 ## HMI Parameters for Simulation
@@ -824,46 +729,3 @@ The purpose of this repository is therefore not to define a universal chiller co
 
 ---
 
-## Project Goals
-
-This project was created as a practical learning exercise with the following goals:
-
-- Build a complete PLC/HMI project instead of isolated tutorial examples
-- Use FB, FC, DB and UDT structures
-- Practice multi-instance Function Blocks
-- Implement equipment managers
-- Implement compressor runtime balancing
-- Integrate PID control with staged equipment
-- Build a PLCSIM simulation layer
-- Create HMI process screens
-- Configure trend logging
-- Configure active alarms
-- Configure historical alarm logging
-- Keep the PLC program modular and easy to troubleshoot
-
----
-
-## Disclaimer
-
-This software is provided for **educational and demonstration purposes only**.
-
-It does not replace:
-
-- Refrigeration system engineering
-- Functional safety design
-- Electrical protection
-- Manufacturer-specific compressor protection
-- Machine risk assessment
-- Commissioning procedures
-- Regulatory compliance
-- Site-specific interlocks
-
-Do not deploy this example directly to production equipment without appropriate engineering, testing, validation and safety measures.
-
----
-
-## License
-
-Add the license that best fits your repository before publishing.
-
-For an educational example, the MIT License is a common option if you want others to freely study, modify and reuse the code.
